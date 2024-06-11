@@ -52,18 +52,25 @@ configurations.
 ### Hooks
 
 There are hundreds of hooks available for pre-commit. You can find them in the
-[pre-commit hooks](https://pre-commit.com/hooks.html) page.
+[pre-commit hooks](https://pre-commit.com/hooks.html) page. To configure a hook,
+you can see keys and values in the
+[pre-commit documentation](https://pre-commit.com/#pre-commit-configyaml---hooks).
+
+pre-commit can be
+[configured to use in other stages](https://pre-commit.com/#confining-hooks-to-run-at-certain-stages),
+such as pre-push and pre-merge-commit. Just add the `stages` key in the hook and
+set the stages you want to run the hook.
 
 You can also create your own hooks following the instructions available in
 [Creating new hook](https://pre-commit.com/index.html#new-hooks). You can use to
-run your tests or check coverage,
+run your tests or check coverage. You can also use it to run your own scripts.
 
 Which hooks to use, depends on the programming languages and the project. You
 can add as many hooks as you want, but remember that the more hooks you add, the
 longer it will take to run the pre-commit hooks. Let's take a look to the
 `pre-commit-config.yaml` file in this repository.
 
-## Maintenance
+### Maintenance
 
 - As hooks are versioned, they can be updated to add new functionality and bug
   fixes. You can update the hooks by running `pre-commit autoupdate`
@@ -72,10 +79,10 @@ longer it will take to run the pre-commit hooks. Let's take a look to the
 ### Caveants
 
 - `pre-commit` only runs in the staging area, so you need to add the files to
-  the staging area before running `git commit`.
-- If you add `pre-commit` or a new hook in a started project, you need to
-  manually execute `pre-commit run -all` to make sure hooks are executed in all
-  files to detected issues.
+  the staging area before running `git commit`. Only applicable on stage commit.
+- If you add `pre-commit` in a started project, or a new hook to your list, you
+  need to manually execute `pre-commit run -all` to make sure hooks are executed
+  in all files to detect issues.
 - `pre-commit` uses a different virtualenv, so new dependencies are installed in
   the pre-commit virtualenv. This may cause some issues with the dependencies
   versions, in case you have different versions in your project/local and in the
@@ -88,7 +95,7 @@ longer it will take to run the pre-commit hooks. Let's take a look to the
   pipeline to run to see if your code is correct.
 - Ensure that the pre-commit hooks are not too slow, as it can be frustrating to
   wait for the hooks to run every time you commit, specially if you are using
-  `git-flow`.
+  `git-flow`. If you have a slow hook, you can set it to run only on stage push.
 
 ### Skipping
 
@@ -102,9 +109,6 @@ longer it will take to run the pre-commit hooks. Let's take a look to the
 
 ### The extra mile
 
-- pre-commit can be
-  [configured to use in other stages](https://pre-commit.com/#confining-hooks-to-run-at-certain-stages),
-  such as pre-push and pre-merge-commit
 - Documentation is quite extended and we just scratch the surface of all
   features and configuration pre-commit offers. Feel free to explore the
   [pre-commit documentation](https://pre-commit.com/).
